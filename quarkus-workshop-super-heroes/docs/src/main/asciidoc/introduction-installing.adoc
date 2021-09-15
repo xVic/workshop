@@ -1,0 +1,75 @@
+[[introduction-installing]]
+= Installing Software
+
+
+== CodeReady Workspace
+
+CodeReady Workspaces is a collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development.
+You are going to create your own environment.
+
+=== CRW creation
+
+* Go to the Etherpad site and choose an user. This user will be used to access the CRW and the OpenShift Web Console and for naming some components that you are going to create during the workshop.
+
+* Launch the CRW creation by clicking the link mentioned in the Etherpad site.
+
+* Once the CRW creation done, access to your CRW and sign up with your own user (selected previously in Etherpad) and full fill the form:
+
+	user: USERNAME
+	pwd: openshift
+	email: USERNAME@ocp.com
+	first name: Yago
+	last name: Sanchez
+
+If everything goes well, you should have a CodeReady Workspace with a `quarkus-workshop` folder ready to start to code:
+
+image::crw-arrival.png[]
+
+* Finally, open a terminal from the Terminal menu -> Open Terminal in specific container -> maven.
+
+=== Command Line Utilities
+
+Just make sure the following commands work on your CRW terminal
+
+[source,shell]
+----
+$ java -version
+$ mvn -version
+$ curl --version
+----
+
+== OpenShift Container Platform
+
+Your lab environment includes Red Hat's OpenShift Container Platform (OCP).
+
+Access to your OCP resources can be gained via both the `oc` CLI utility and the OCP web console.
+
+=== OpenShift Namespaces
+
+The project we are going to develop will contain 3 microservices accessing to a PostgreSQL database. We will make the databases to run in a OpenShift dedicated namespace.
+
+. In the terminal of your CRW, authenticate into OpenShift as a non cluster admin user (USERNAME) using the `oc` utility.
+
+NOTE: You can get the command for authenticating from the OpenShift Web Console.
+
+[source,shell]
+----
+$ oc login
+----
+
+There are 2 namespaces (OpenShift projects) in your OpenShift cluster:
+The namespace for hosting your CRW environment is USERNAME-codeready where `USERNAME` correspond to your specific username.
+The namespace for hosting databases and microservices is USERNAME-heroes.
+
+NOTE: change the USERNAME with your own.
+
+=== Operators
+
+Your lab environment comes pre-installed with an PostgreSQL operator.
+
+*PostgreSQL operator*
+
+The PostgreSQL operator allows you to package, install, configure and manage a PostgreSQL database within an OpenShift cluster.
+
+#Congratulations!#
+Your lab environment is now ready to use.

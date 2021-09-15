@@ -1,0 +1,13 @@
+---
+metadata:
+  built-with-quarkus-core: "2.2.2.Final"
+  extension-dependencies:
+  - "io.quarkus:quarkus-core"
+  - "io.quarkus:quarkus-vertx-http"
+  - "io.quarkus:quarkus-mutiny"
+  - "io.quarkus:quarkus-smallrye-context-propagation"
+  - "io.quarkus:quarkus-vertx-core"
+  - "io.quarkus:quarkus-arc"
+  - "io.quarkus:quarkus-netty"
+artifact: "io.quarkus.workshop.super-heroes:extension-fault-injector::jar:1.0"
+name: "Quarkus Workshop :: Extensions :: Fault Injector Extension :: Runtime"

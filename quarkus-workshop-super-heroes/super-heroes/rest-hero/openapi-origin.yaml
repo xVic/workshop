@@ -1,0 +1,93 @@
+---
+openapi: 3.0.3
+info:
+    title: rest-hero API
+    version: 1.0.0-SNAPSHOT
+paths:
+    /api/heroes:
+        get:
+            responses:
+                "200":
+                    description: OK
+        put:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Hero'
+            responses:
+                "200":
+                    description: OK
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Hero'
+            responses:
+                "200":
+                    description: OK
+    /api/heroes/hello:
+        get:
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+    /api/heroes/random:
+        get:
+            responses:
+                "200":
+                    description: OK
+    /api/heroes/{id}:
+        get:
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                "200":
+                    description: OK
+        delete:
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                "200":
+                    description: OK
+components:
+    schemas:
+        Hero:
+            required:
+                - level
+                - name
+            type: object
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                level:
+                    format: int32
+                    minimum: 1
+                    type: integer
+                    nullable: false
+                name:
+                    maxLength: 50
+                    minLength: 3
+                    type: string
+                    nullable: false
+                otherName:
+                    type: string
+                picture:
+                    type: string
+                powers:
+                    type: string

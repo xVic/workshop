@@ -1,0 +1,140 @@
+[[introduction-preparing]]
+= Preparing for the Workshop
+
+:icons: font
+
+== Workshop scaffolding
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+The workshop folder containing the code is already in your CRW, at the root of the filesystem.
+
+In this workshop you will be developing an application dealing with Super Heroes (and Super Villains 🦹).
+The code will be in the super-heroes directory:
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+quarkus-workshop-super-heroes
++ super-heroes         | The entire Super Hero application
+}
+}
+@endsalt
+----
+
+=== Super Heroes Application
+
+Under the `super-heroes` directory you will find the entire Super Hero application spread throughout a set of subdirectories, each one containing a microservice or some tooling.
+The final structure will be the following:
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+quarkus-workshop-super-heroes
++ super-heroes
+++ infrastructure          | All the needed infrastructure (Postgres, Kafka...)
+++ load-super-heroes       | Stress tool loading heroes, villains and fights
+++ rest-fight              | REST API allowing super heroes to fight (you will create it)
+++ rest-hero               | REST API for CRUD operations on Heroes (you will create it)
+++ rest-villain            | REST API for CRUD operations on Villains
+++ ui-super-heroes         | Angular application so we can fight visually
+}
+}
+@endsalt
+----
+
+Most of theses subdirectories are Maven projects and follow the Maven directory structure:
+
+[plantuml]
+----
+@startsalt
+{
+{
+T
+quarkus-workshop-super-heroes
++  super-heroes
+++ rest-hero
++++ src
+++++  main
++++++  docker
++++++  java
++++++  resources
+++++  test
++++++  java
+}
+}
+@endsalt
+----
+
+For next steps, you need to be authenticated on OpenShift with your own user
+
+[source,shell]
+----
+$ oc login ....
+$ oc project USERNAME-heroes
+----
+
+NOTE: change USERNAME with your own.
+
+== Databases
+
+Any microservice system is going to rely on a set of technical services.
+In our context, we are going to use PostgreSQL as the database.
+The infrastructure folder contains the OpenShift manifests to create the OpenShift resources in order to have this technical service available.
+We need to create a database for each microservice: heroes, villains and fights.
+The OpenShift manifests describing them can be found under `quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
+
+We can deploy the DBs easily using `oc` utility and the manifests from the CRW terminal.
+Make sure that you are authenticated with your USERNAME and you are using the `USERNAME-heroes` namespace, then `apply` the databases yaml file:
+
+[source,shell]
+----
+oc apply -f quarkus-workshop-super-heroes/super-heroes/infrastructure/databases.yaml
+----
+
+You can verify the availability of databases with the following command:
+[source,shell]
+----
+curl http://heroes-database.USERNAME-heroes:5432
+----
+You should have the following response:
+
+----
+curl: (52) Empty reply from server
+----
+
+
+== Warming up Maven
+
+Now that you have the initial structure in place, we just need configure the correct url for the database.
+
+On your CRW, edit the `quarkus-workshop-super-heroes/super-heroes/rest-villain/src/main/resources/application.properties` file and change database configuration. You need to change DB's URL:
+
+----
+quarkus.datasource.jdbc.url=jdbc:postgresql://villains-database.USERNAME-heroes:5432/villains_database
+----
+
+NOTE: Change USERNAME with your own.
+
+Now, in the Terminal, you can navigate to the root directory `quarkus-workshop-super-heroes/` and run:
+
+icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
+
+
+[source,shell]
+----
+mvn clean install
+----
+
+By running this command, it downloads all the required dependencies.
+
+== Ready?
+
+Prerequisites has been installed, the different components have been warmed up,  it's now time to write some code!
+

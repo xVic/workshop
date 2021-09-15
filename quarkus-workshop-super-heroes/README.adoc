@@ -1,0 +1,161 @@
+= Red Hat Quarkus workshop for BBVA 2O2O
+
+== Session Title
+The goal of Quarkus is to make Java a leading platform in Kubernetes/OpenShift and serverless environments, while offering developers a unified reactive and imperative programming model to optimally address a wider range of distributed application architectures
+This lab offers attendees an intro-level, hands-on session with Quarkus, from the first line of code to making services, to consuming them, and finally to assembling everything in a consistent system. But, what are we going to build? Well, it’s going to be a set of microservices (we want to be trendy):
+
+== Goals
+
+In this lab, you will :
+
+- Code a microservices architecture
+- Use Hibernate with Panache
+- Use HTTP and events (Kafka)
+- Code on Code Ready Workspaces and next deploy on OpenShift
+
+== Agenda
+
+* Quarkus Introduction[presentation]: 15min - Auri?
+* Instructor message: 5 min (Carlos)
+* Play with the Lab: 2h20 (attendees)
+* Debriefing - Q&A : 15min (All)
+
+
+= Workshop Super Heroes
+
+== Instructions
+
+Check https://bbvahackathon.github.io to get the workshop instructions.
+
+== Generate the documentation
+
+You can either generate the documentation for each exercise or for the entire workshop.
+For that, you just run the Maven command `mvn clean generate-resources` under an `docs` directory.
+
+== Start the infrastructure
+
+./super-heroes/infrastructure/prerequisites.sh -c 1 --start 5 -s api.cluster-04b6.04b6.example.opentlc.com:6443
+
+== Build
+
+```bash
+mvn clean install
+```
+
+== Running the full system
+
+* Run the infrastructure as explained above.
+* In a new terminal, run the heroes microservice
+```bash
+cd rest-hero
+mvn clean compile quarkus:dev
+```
+* In a new terminal, run the villains microservice
+```bash
+cd rest-villain
+mvn clean compile quarkus:dev
+```
+* In a new terminal, run the fights microservice
+```bash
+cd rest-fight
+mvn clean compile quarkus:dev
+```
+
+== Ports
+
+* heroes microservice -> 8083
+* villains microservice -> 8084
+* fights microservice -> 8082, ui on http://localhost:8082/super-heroes
+* stats microservice -> 8085, ui on http://localhost:8085/
+* Prometheus -> 9090
+
+== References
+
+* https://github.com/cescoffier/quarkus-todo-app
+* https://github.com/agoncal/baking-microservice-pie
+* https://forge.jboss.org/document/hands-on-lab
+* https://bit.ly/forge-hol
+
+== Note for ourselves
+
+We can use http://plantuml.com/en/salt[Salt] to generate an image from a `tree` directory structure.
+We need a few search and replaces, but we can easily go from :
+
+[source,text]
+----
+super-heroes/
++  infrastructure   All the needed infrastructure (Postgres, Kafka...)
++  rest-fight       REST API allowing super heroes to fight
+│   └── src
+│       +  main
+│       └── test
++  rest-hero        REST API for CRUD operations on Heroes
+│   └── src
+│       +  main
+│       └── test
++  rest-villain     REST API for CRUD operations on Villains
+│   └── src
+│       +  main
+│       └── test
+└── ui-super-heroes  Angular application so we can fight visually
+    └── src
+        +  app
+        └── main
+----
+
+to :
+
+[source,text]
+----
+@startsalt
+{
+{
+T
++ infrastructure
++ rest-fight
+++ src
+++ main
+++ test
++ rest-hero
+++ src
+++ main
+++ test
++ rest-villain
+++ src
+++ main
+++ test
++ ui-super-heroes
++ src
++ app
++ main
+}
+}
+@endsalt
+----
+
+Here is the sequence of search&replace to easily go from one format to another one:
+
+[source,text]
+----
+// Change the characters with +
+Replace `/` with ``
+Replace `├──` with `+ `
+Replace `└──` with `+ `
+Replace `│` with ` `
+// Might have some special character (replace it with a blank)
+Replace ' ' with ' '
+Replace `    ` with `+`
+----
+
+== Running DBs locally with Docker
+
+rest-hero
+```bash
+docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=superman -e POSTGRES_PASSWORD=superman -e POSTGRES_DB=heroes_database -p 5432:5432 postgres:11.5
+docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=superfight -e POSTGRES_PASSWORD=superfight -e POSTGRES_DB=fights_database -p 5432:5432 postgres:11.5
+```
+
+rest-villain
+```bash
+docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=superbad -e POSTGRES_PASSWORD=superbad -e POSTGRES_DB=villains_database -p 5432:5432 postgres:11.5
+```
