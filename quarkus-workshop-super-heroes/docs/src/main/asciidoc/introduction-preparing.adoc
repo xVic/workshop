@@ -88,14 +88,14 @@ Any microservice system is going to rely on a set of technical services.
 In our context, we are going to use PostgreSQL as the database.
 The infrastructure folder contains the OpenShift manifests to create the OpenShift resources in order to have this technical service available.
 We need to create a database for each microservice: heroes, villains and fights.
-The OpenShift manifests describing them can be found under `quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
+The OpenShift manifests describing them can be found under `$CHE_PROJECTS_ROOT/quarkus-workshop-super-heroes/super-heroes/infrastructure/` directory.
 
 We can deploy the DBs easily using `oc` utility and the manifests from the CRW terminal.
 Make sure that you are authenticated with your USERNAME and you are using the `USERNAME-heroes` namespace, then `apply` the databases yaml file:
 
 [source,shell]
 ----
-oc apply -f quarkus-workshop-super-heroes/super-heroes/infrastructure/databases.yaml
+oc apply -f $CHE_PROJECTS_ROOT/quarkus-workshop-super-heroes/super-heroes/infrastructure/databases.yaml
 ----
 
 You can verify the availability of databases with the following command:
@@ -114,7 +114,7 @@ curl: (52) Empty reply from server
 
 Now that you have the initial structure in place, we just need configure the correct url for the database.
 
-On your CRW, edit the `quarkus-workshop-super-heroes/super-heroes/rest-villain/src/main/resources/application.properties` file and change database configuration. You need to change DB's URL:
+On your CRW, edit the `$CHE_PROJECTS_ROOT/quarkus-workshop-super-heroes/super-heroes/rest-villain/src/main/resources/application.properties` file and change database configuration. You need to change DB's URL:
 
 ----
 quarkus.datasource.jdbc.url=jdbc:postgresql://villains-database.USERNAME-heroes:5432/villains_database

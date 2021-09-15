@@ -11,7 +11,6 @@ cd /tmp
 rm -fR /tmp/Red-Hat-Developer-Games.github.io
 git clone git@github.com:Red-Hat-Developer-Games/Red-Hat-Developer-Games.github.io.git
 cd $old
-#rm -fR /tmp/bbvahackathon.github.io
 rsync -avz ./target/generated-asciidoc/ /tmp/Red-Hat-Developer-Games.github.io
 cp /tmp/Red-Hat-Developer-Games.github.io/spine.html /tmp/Red-Hat-Developer-Games.github.io/index.html
 cd /tmp/Red-Hat-Developer-Games.github.io

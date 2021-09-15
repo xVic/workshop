@@ -12,7 +12,7 @@ Let's call it the Fight API.
 == Bootstrapping the Fight REST Endpoint
 
 Like for the Hero and Villain API, the easiest way to create this new Quarkus project is to use a Maven archetype.
-Under the `quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
+Under the `$CHE_PROJECTS_ROOT/quarkus-workshop-super-heroes/super-heroes` root directory where you have all your code.
 
 icon:hand-o-right[role="red", size=2x] [red big]#Call to action#
 

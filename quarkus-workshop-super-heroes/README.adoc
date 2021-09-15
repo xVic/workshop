@@ -1,4 +1,4 @@
-= Red Hat Quarkus workshop for BBVA 2O2O
+= Red Hat Quarkus workshop for Santander Developer Games 2O21
 
 == Session Title
 The goal of Quarkus is to make Java a leading platform in Kubernetes/OpenShift and serverless environments, while offering developers a unified reactive and imperative programming model to optimally address a wider range of distributed application architectures
@@ -25,7 +25,7 @@ In this lab, you will :
 
 == Instructions
 
-Check https://bbvahackathon.github.io to get the workshop instructions.
+Check https://red-hat-developer-games.github.io to get the workshop instructions.
 
 == Generate the documentation
 
